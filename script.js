@@ -1,24 +1,370 @@
-/* ====== V4X DOWNLOAD: CHỈNH FILE TẠI ĐÂY ====== */
+// ================================
+// V4X DOWNLOAD
+// ================================
+
 const files = [
-{title:"V4X PC OPTIMIZER",category:"windows",icon:"⚡",desc:"Tool tối ưu Windows, dọn rác và hỗ trợ giảm tiến trình nền.",size:"12 MB",version:"V1.0",download:"https://example.com/v4x-pc-optimizer.zip"},
-{title:"V4X BLUE STACKS FPS",category:"emulator",icon:"📱",desc:"Bộ thiết lập giả lập và tối ưu hiệu năng cho gaming.",size:"8 MB",version:"V2.0",download:"https://example.com/v4x-bluestacks.zip"},
-{title:"V4X WINDOWS CLEANER",category:"windows",icon:"🧹",desc:"Công cụ dọn file tạm và dữ liệu rác an toàn.",size:"5 MB",version:"V1.2",download:"https://example.com/v4x-cleaner.zip"},
-{title:"V4X GAME TOOL",category:"game",icon:"🎮",desc:"Bộ công cụ hỗ trợ quản lý tài nguyên gaming.",size:"15 MB",version:"V1.0",download:"https://example.com/v4x-game-tool.zip"},
-{title:"V4X PASSWORD GENERATOR",category:"tool",icon:"🔐",desc:"Tạo mật khẩu ngẫu nhiên với nhiều tùy chọn.",size:"4 MB",version:"V1.0",download:"https://example.com/password-generator.exe"},
-{title:"V4X VIDEO TOOL",category:"software",icon:"🎬",desc:"Công cụ tiện ích cho quá trình xử lý video.",size:"22 MB",version:"V1.0",download:"https://example.com/v4x-video-tool.zip"},
-{title:"V4X FIREWORKS",category:"game",icon:"🎆",desc:"Dự án hiệu ứng pháo hoa V4X.",size:"3 MB",version:"V1.0",download:"https://example.com/v4x-fireworks.zip"},
-{title:"V4X SYSTEM TOOLKIT",category:"tool",icon:"🧰",desc:"Bộ tiện ích hệ thống dành cho người dùng Windows.",size:"18 MB",version:"V2.1",download:"https://example.com/v4x-system-toolkit.zip"},
-{title:"V4X EMULATOR PACK",category:"emulator",icon:"🖥️",desc:"Tổng hợp thiết lập và tiện ích cho giả lập.",size:"30 MB",version:"V1.5",download:"https://example.com/v4x-emulator-pack.zip"},
-{title:"V4X SOFTWARE PACK",category:"software",icon:"💿",desc:"Gói phần mềm tiện ích do bạn tự thêm link tải.",size:"45 MB",version:"V1.0",download:"https://example.com/v4x-software-pack.zip"},
-{title:"V4X CUSTOM FILE 01",category:"other",icon:"📦",desc:"Mẫu file để bạn tự thay nội dung.",size:"10 MB",version:"V1.0",download:"https://example.com/custom-file-01.zip"},
-{title:"V4X CUSTOM FILE 02",category:"other",icon:"💎",desc:"Mẫu file thứ hai để bạn tự cấu hình.",size:"20 MB",version:"V1.0",download:"https://example.com/custom-file-02.zip"}
+
+  {
+    id: 1,
+    name: "V4X PC OPTIMIZER",
+    category: "windows",
+    icon: "⚡",
+    description: "Công cụ tối ưu Windows và giảm tiến trình không cần thiết.",
+    size: "12 MB",
+    version: "V4X V2.0",
+    download: "#"
+  },
+
+  {
+    id: 2,
+    name: "V4X BLUE STACKS TOOL",
+    category: "emulator",
+    icon: "📱",
+    description: "Công cụ hỗ trợ quản lý và tối ưu giả lập Android.",
+    size: "8 MB",
+    version: "V1.5",
+    download: "#"
+  },
+
+  {
+    id: 3,
+    name: "V4X WINDOWS CLEANER",
+    category: "windows",
+    icon: "🧹",
+    description: "Dọn file tạm và các dữ liệu Windows không cần thiết.",
+    size: "4 MB",
+    version: "V1.0",
+    download: "#"
+  },
+
+  {
+    id: 4,
+    name: "V4X GAME TOOL",
+    category: "game",
+    icon: "🎮",
+    description: "Bộ công cụ tiện ích dành cho game và gaming PC.",
+    size: "15 MB",
+    version: "V1.0",
+    download: "#"
+  },
+
+  {
+    id: 5,
+    name: "V4X DOWNLOAD TOOL",
+    category: "tool",
+    icon: "🛠",
+    description: "Công cụ tiện ích V4X dành cho người dùng Windows.",
+    size: "6 MB",
+    version: "V2.1",
+    download: "#"
+  },
+
+  {
+    id: 6,
+    name: "V4X EMULATOR TOOL",
+    category: "emulator",
+    icon: "🚀",
+    description: "Công cụ quản lý và tối ưu trải nghiệm giả lập.",
+    size: "10 MB",
+    version: "V1.2",
+    download: "#"
+  }
+
 ];
-const categoryNames={game:"GAME",tool:"TOOL",windows:"WINDOWS",emulator:"EMULATOR",software:"SOFTWARE",other:"KHÁC"};
-const fileGrid=document.getElementById("fileGrid"),search=document.getElementById("search"),empty=document.getElementById("empty"),count=document.getElementById("count"),modal=document.getElementById("modal");
-function esc(t){const d=document.createElement("div");d.textContent=t;return d.innerHTML}
-function renderFiles(list){fileGrid.innerHTML="";list.forEach(file=>{const card=document.createElement("article");card.className="file-card";card.innerHTML=`<div class="file-top"><div class="icon">${file.icon}</div><span class="tag">${categoryNames[file.category]||"FILE"}</span></div><h3>${esc(file.title)}</h3><p>${esc(file.desc)}</p><div class="file-bottom"><span class="size">${esc(file.size)} · ${esc(file.version)}</span><button class="details" data-index="${files.indexOf(file)}">CHI TIẾT</button></div>`;fileGrid.appendChild(card)});empty.classList.toggle("hidden",list.length!==0);count.textContent=files.length}
-function filterFiles(){const active=document.querySelector(".category.active")?.dataset.category||"all",kw=search.value.trim().toLowerCase();renderFiles(files.filter(f=>(active==="all"||f.category===active)&&(f.title.toLowerCase().includes(kw)||f.desc.toLowerCase().includes(kw))))}
-document.querySelectorAll(".category").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));b.classList.add("active");filterFiles()}));search.addEventListener("input",filterFiles);
-fileGrid.addEventListener("click",e=>{const b=e.target.closest(".details");if(!b)return;const f=files[+b.dataset.index];document.getElementById("mIcon").textContent=f.icon;document.getElementById("mCat").textContent=categoryNames[f.category]||"FILE";document.getElementById("mTitle").textContent=f.title;document.getElementById("mDesc").textContent=f.desc;document.getElementById("mSize").textContent="📦 "+f.size;document.getElementById("mVer").textContent="⚙ "+f.version;document.getElementById("mDownload").href=f.download;modal.classList.remove("hidden")});
-function closeModal(){modal.classList.add("hidden")}document.getElementById("close").addEventListener("click",closeModal);modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
-document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>document.getElementById("nav").classList.remove("open")));document.getElementById("year").textContent=new Date().getFullYear();renderFiles(files);
+
+
+// ================================
+// ELEMENTS
+// ================================
+
+const fileGrid = document.getElementById("fileGrid");
+const empty = document.getElementById("empty");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+
+const modal = document.getElementById("modal");
+const close = document.getElementById("close");
+
+const mIcon = document.getElementById("mIcon");
+const mCat = document.getElementById("mCat");
+const mTitle = document.getElementById("mTitle");
+const mDesc = document.getElementById("mDesc");
+const mSize = document.getElementById("mSize");
+const mVer = document.getElementById("mVer");
+const mDownload = document.getElementById("mDownload");
+
+const menuBtn = document.getElementById("menuBtn");
+const nav = document.getElementById("nav");
+
+
+// ================================
+// CATEGORY NAME
+// ================================
+
+const categoryNames = {
+  game: "GAME",
+  tool: "TOOL",
+  windows: "WINDOWS",
+  emulator: "EMULATOR"
+};
+
+
+// ================================
+// RENDER FILES
+// ================================
+
+function renderFiles(list) {
+
+  fileGrid.innerHTML = "";
+
+  count.textContent = list.length;
+
+  if (list.length === 0) {
+    empty.classList.remove("hidden");
+    return;
+  }
+
+  empty.classList.add("hidden");
+
+  list.forEach(file => {
+
+    const card = document.createElement("article");
+
+    card.className = "file-card";
+
+    card.innerHTML = `
+
+      <div class="file-top">
+
+        <div class="file-icon">
+          ${file.icon}
+        </div>
+
+        <span class="tag">
+          ${categoryNames[file.category] || "FILE"}
+        </span>
+
+      </div>
+
+      <h3>${file.name}</h3>
+
+      <p>
+        ${file.description}
+      </p>
+
+      <div class="file-meta">
+
+        <span>📦 ${file.size}</span>
+
+        <span>⚡ ${file.version}</span>
+
+      </div>
+
+      <button
+        class="file-btn"
+        data-id="${file.id}"
+      >
+        Xem chi tiết →
+      </button>
+
+    `;
+
+    fileGrid.appendChild(card);
+
+  });
+
+}
+
+
+// ================================
+// OPEN MODAL
+// ================================
+
+function openModal(id) {
+
+  const file = files.find(item => item.id === id);
+
+  if (!file) return;
+
+  mIcon.textContent = file.icon;
+
+  mCat.textContent =
+    categoryNames[file.category] || "FILE";
+
+  mTitle.textContent = file.name;
+
+  mDesc.textContent = file.description;
+
+  mSize.textContent = file.size;
+
+  mVer.textContent = file.version;
+
+  mDownload.href = file.download;
+
+  modal.classList.remove("hidden");
+
+  document.body.style.overflow = "hidden";
+
+}
+
+
+// ================================
+// CLOSE MODAL
+// ================================
+
+function closeModal() {
+
+  modal.classList.add("hidden");
+
+  document.body.style.overflow = "";
+
+}
+
+
+// ================================
+// FILE BUTTON
+// ================================
+
+fileGrid.addEventListener("click", event => {
+
+  const button = event.target.closest(".file-btn");
+
+  if (!button) return;
+
+  const id = Number(button.dataset.id);
+
+  openModal(id);
+
+});
+
+
+// ================================
+// SEARCH
+// ================================
+
+search.addEventListener("input", () => {
+
+  const keyword =
+    search.value.toLowerCase().trim();
+
+  const result = files.filter(file =>
+
+    file.name.toLowerCase().includes(keyword) ||
+
+    file.description
+      .toLowerCase()
+      .includes(keyword)
+
+  );
+
+  renderFiles(result);
+
+});
+
+
+// ================================
+// CATEGORY
+// ================================
+
+document.querySelectorAll(".category").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    document
+      .querySelectorAll(".category")
+      .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    const category =
+      button.dataset.category;
+
+    const keyword =
+      search.value.toLowerCase().trim();
+
+    let result = files;
+
+    if (category !== "all") {
+
+      result = result.filter(
+        file => file.category === category
+      );
+
+    }
+
+    if (keyword) {
+
+      result = result.filter(file =>
+
+        file.name.toLowerCase().includes(keyword) ||
+
+        file.description
+          .toLowerCase()
+          .includes(keyword)
+
+      );
+
+    }
+
+    renderFiles(result);
+
+  });
+
+});
+
+
+// ================================
+// CLOSE EVENTS
+// ================================
+
+close.addEventListener("click", closeModal);
+
+document
+  .querySelector(".modal-overlay")
+  .addEventListener("click", closeModal);
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "Escape") {
+
+    closeModal();
+
+  }
+
+});
+
+
+// ================================
+// MOBILE MENU
+// ================================
+
+menuBtn.addEventListener("click", () => {
+
+  nav.classList.toggle("show");
+
+});
+
+document.querySelectorAll("#nav a").forEach(link => {
+
+  link.addEventListener("click", () => {
+
+    nav.classList.remove("show");
+
+  });
+
+});
+
+
+// ================================
+// YEAR
+// ================================
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+
+// ================================
+// START
+// ================================
+
+renderFiles(files);
