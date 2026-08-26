@@ -1,51 +1,370 @@
-const files=[
-{id:1,name:"V4X PC Optimizer",cat:"tool",icon:"⚡",desc:"Bộ công cụ tối ưu Windows cơ bản, giao diện V4X.",size:"12 MB",ver:"1.0",url:"https://example.com/v4x-pc-optimizer.zip"},
-{id:2,name:"V4X Game Booster",cat:"tool",icon:"🚀",desc:"Công cụ hỗ trợ tối ưu trải nghiệm chơi game.",size:"8 MB",ver:"1.0",url:"https://example.com/v4x-game-booster.zip"},
-{id:3,name:"V4X Windows Tools",cat:"windows",icon:"🪟",desc:"Tập hợp tiện ích Windows thường dùng.",size:"15 MB",ver:"1.0",url:"https://example.com/v4x-windows-tools.zip"},
-{id:4,name:"V4X Emulator Pack",cat:"emulator",icon:"📱",desc:"Bộ tài nguyên mẫu dành cho người dùng giả lập.",size:"25 MB",ver:"1.0",url:"https://example.com/v4x-emulator-pack.zip"},
-{id:5,name:"V4X Wallpaper Pack",cat:"tool",icon:"🎨",desc:"Bộ hình nền phong cách gaming neon V4X.",size:"80 MB",ver:"1.0",url:"https://example.com/v4x-wallpaper-pack.zip"},
-{id:6,name:"V4X Gaming Config",cat:"game",icon:"🎮",desc:"Cấu hình mẫu cho khu vực tải game và gaming.",size:"5 MB",ver:"1.0",url:"https://example.com/v4x-gaming-config.zip"},
-{id:7,name:"V4X Windows Cleaner",cat:"windows",icon:"🧹",desc:"Tiện ích dọn dẹp các file tạm thông thường.",size:"6 MB",ver:"1.0",url:"https://example.com/v4x-windows-cleaner.zip"},
-{id:8,name:"V4X BlueStacks Pack",cat:"emulator",icon:"🔥",desc:"Tài nguyên mẫu cho mục Emulator.",size:"18 MB",ver:"1.0",url:"https://example.com/v4x-bluestacks-pack.zip"}
+// ================================
+// V4X DOWNLOAD
+// ================================
+
+const files = [
+
+  {
+    id: 1,
+    name: "V4X PC OPTIMIZER",
+    category: "windows",
+    icon: "⚡",
+    description: "Công cụ tối ưu Windows và giảm tiến trình không cần thiết.",
+    size: "12 MB",
+    version: "V4X V2.0",
+    download: "#"
+  },
+
+  {
+    id: 2,
+    name: "V4X BLUE STACKS TOOL",
+    category: "emulator",
+    icon: "📱",
+    description: "Công cụ hỗ trợ quản lý và tối ưu giả lập Android.",
+    size: "8 MB",
+    version: "V1.5",
+    download: "#"
+  },
+
+  {
+    id: 3,
+    name: "V4X WINDOWS CLEANER",
+    category: "windows",
+    icon: "🧹",
+    description: "Dọn file tạm và các dữ liệu Windows không cần thiết.",
+    size: "4 MB",
+    version: "V1.0",
+    download: "#"
+  },
+
+  {
+    id: 4,
+    name: "V4X GAME TOOL",
+    category: "game",
+    icon: "🎮",
+    description: "Bộ công cụ tiện ích dành cho game và gaming PC.",
+    size: "15 MB",
+    version: "V1.0",
+    download: "#"
+  },
+
+  {
+    id: 5,
+    name: "V4X DOWNLOAD TOOL",
+    category: "tool",
+    icon: "🛠",
+    description: "Công cụ tiện ích V4X dành cho người dùng Windows.",
+    size: "6 MB",
+    version: "V2.1",
+    download: "#"
+  },
+
+  {
+    id: 6,
+    name: "V4X EMULATOR TOOL",
+    category: "emulator",
+    icon: "🚀",
+    description: "Công cụ quản lý và tối ưu trải nghiệm giả lập.",
+    size: "10 MB",
+    version: "V1.2",
+    download: "#"
+  }
+
 ];
 
-const names={game:"GAME",tool:"TOOL",windows:"WINDOWS",emulator:"EMULATOR"};
-let active="all";
-const grid=document.getElementById("fileGrid"),search=document.getElementById("search"),empty=document.getElementById("empty");
 
-function safe(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
-function render(){
- const q=search.value.trim().toLowerCase();
- const list=files.filter(f=>(active==="all"||f.cat===active)&&`${f.name} ${f.desc}`.toLowerCase().includes(q));
- grid.innerHTML=list.map(f=>`
- <article class="card">
-  <div class="icon">${f.icon}</div><span class="tag">${names[f.cat]}</span>
-  <h3>${safe(f.name)}</h3><p>${safe(f.desc)}</p>
-  <div class="meta"><span>📦 ${f.size}</span><span>v${f.ver}</span></div>
-  <div class="card-actions"><button class="btn secondary detail" data-id="${f.id}">Chi tiết</button><a class="btn primary" href="${f.url}" target="_blank" rel="noopener">Tải</a></div>
- </article>`).join("");
- empty.classList.toggle("hidden",list.length>0);
- document.querySelectorAll(".detail").forEach(b=>b.onclick=()=>openModal(+b.dataset.id));
- document.getElementById("count").textContent=files.length;
+// ================================
+// ELEMENTS
+// ================================
+
+const fileGrid = document.getElementById("fileGrid");
+const empty = document.getElementById("empty");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+
+const modal = document.getElementById("modal");
+const close = document.getElementById("close");
+
+const mIcon = document.getElementById("mIcon");
+const mCat = document.getElementById("mCat");
+const mTitle = document.getElementById("mTitle");
+const mDesc = document.getElementById("mDesc");
+const mSize = document.getElementById("mSize");
+const mVer = document.getElementById("mVer");
+const mDownload = document.getElementById("mDownload");
+
+const menuBtn = document.getElementById("menuBtn");
+const nav = document.getElementById("nav");
+
+
+// ================================
+// CATEGORY NAME
+// ================================
+
+const categoryNames = {
+  game: "GAME",
+  tool: "TOOL",
+  windows: "WINDOWS",
+  emulator: "EMULATOR"
+};
+
+
+// ================================
+// RENDER FILES
+// ================================
+
+function renderFiles(list) {
+
+  fileGrid.innerHTML = "";
+
+  count.textContent = list.length;
+
+  if (list.length === 0) {
+    empty.classList.remove("hidden");
+    return;
+  }
+
+  empty.classList.add("hidden");
+
+  list.forEach(file => {
+
+    const card = document.createElement("article");
+
+    card.className = "file-card";
+
+    card.innerHTML = `
+
+      <div class="file-top">
+
+        <div class="file-icon">
+          ${file.icon}
+        </div>
+
+        <span class="tag">
+          ${categoryNames[file.category] || "FILE"}
+        </span>
+
+      </div>
+
+      <h3>${file.name}</h3>
+
+      <p>
+        ${file.description}
+      </p>
+
+      <div class="file-meta">
+
+        <span>📦 ${file.size}</span>
+
+        <span>⚡ ${file.version}</span>
+
+      </div>
+
+      <button
+        class="file-btn"
+        data-id="${file.id}"
+      >
+        Xem chi tiết →
+      </button>
+
+    `;
+
+    fileGrid.appendChild(card);
+
+  });
+
 }
-function openModal(id){
- const f=files.find(x=>x.id===id);if(!f)return;
- document.getElementById("mIcon").textContent=f.icon;
- document.getElementById("mCat").textContent=names[f.cat];
- document.getElementById("mTitle").textContent=f.name;
- document.getElementById("mDesc").textContent=f.desc;
- document.getElementById("mSize").textContent="📦 "+f.size;
- document.getElementById("mVer").textContent="🔖 v"+f.ver;
- document.getElementById("mDownload").href=f.url;
- document.getElementById("modal").classList.remove("hidden");
+
+
+// ================================
+// OPEN MODAL
+// ================================
+
+function openModal(id) {
+
+  const file = files.find(item => item.id === id);
+
+  if (!file) return;
+
+  mIcon.textContent = file.icon;
+
+  mCat.textContent =
+    categoryNames[file.category] || "FILE";
+
+  mTitle.textContent = file.name;
+
+  mDesc.textContent = file.description;
+
+  mSize.textContent = file.size;
+
+  mVer.textContent = file.version;
+
+  mDownload.href = file.download;
+
+  modal.classList.remove("hidden");
+
+  document.body.style.overflow = "hidden";
+
 }
-function closeModal(){document.getElementById("modal").classList.add("hidden")}
-document.querySelectorAll(".category").forEach(b=>b.onclick=()=>{document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));b.classList.add("active");active=b.dataset.category;render()});
-search.oninput=render;
-document.getElementById("close").onclick=closeModal;
-document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()};
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
-document.getElementById("menuBtn").onclick=()=>document.getElementById("nav").classList.toggle("open");
-document.querySelectorAll("nav a").forEach(a=>a.onclick=()=>document.getElementById("nav").classList.remove("open"));
-document.getElementById("year").textContent=new Date().getFullYear();
-render();
+
+
+// ================================
+// CLOSE MODAL
+// ================================
+
+function closeModal() {
+
+  modal.classList.add("hidden");
+
+  document.body.style.overflow = "";
+
+}
+
+
+// ================================
+// FILE BUTTON
+// ================================
+
+fileGrid.addEventListener("click", event => {
+
+  const button = event.target.closest(".file-btn");
+
+  if (!button) return;
+
+  const id = Number(button.dataset.id);
+
+  openModal(id);
+
+});
+
+
+// ================================
+// SEARCH
+// ================================
+
+search.addEventListener("input", () => {
+
+  const keyword =
+    search.value.toLowerCase().trim();
+
+  const result = files.filter(file =>
+
+    file.name.toLowerCase().includes(keyword) ||
+
+    file.description
+      .toLowerCase()
+      .includes(keyword)
+
+  );
+
+  renderFiles(result);
+
+});
+
+
+// ================================
+// CATEGORY
+// ================================
+
+document.querySelectorAll(".category").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    document
+      .querySelectorAll(".category")
+      .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    const category =
+      button.dataset.category;
+
+    const keyword =
+      search.value.toLowerCase().trim();
+
+    let result = files;
+
+    if (category !== "all") {
+
+      result = result.filter(
+        file => file.category === category
+      );
+
+    }
+
+    if (keyword) {
+
+      result = result.filter(file =>
+
+        file.name.toLowerCase().includes(keyword) ||
+
+        file.description
+          .toLowerCase()
+          .includes(keyword)
+
+      );
+
+    }
+
+    renderFiles(result);
+
+  });
+
+});
+
+
+// ================================
+// CLOSE EVENTS
+// ================================
+
+close.addEventListener("click", closeModal);
+
+document
+  .querySelector(".modal-overlay")
+  .addEventListener("click", closeModal);
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "Escape") {
+
+    closeModal();
+
+  }
+
+});
+
+
+// ================================
+// MOBILE MENU
+// ================================
+
+menuBtn.addEventListener("click", () => {
+
+  nav.classList.toggle("show");
+
+});
+
+document.querySelectorAll("#nav a").forEach(link => {
+
+  link.addEventListener("click", () => {
+
+    nav.classList.remove("show");
+
+  });
+
+});
+
+
+// ================================
+// YEAR
+// ================================
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+
+// ================================
+// START
+// ================================
+
+renderFiles(files);
