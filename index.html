@@ -2,304 +2,530 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>Neon GameHub</title>
+  <!-- Font & Icons (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
 
-  <meta name="description" content="V4X DOWNLOAD - Kho tải Game, Tool, Windows và Emulator.">
-  <meta name="theme-color" content="#ff2f92">
+    body {
+      background: #0b0b1a;
+      color: #e0e0ff;
+      min-height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  <title>Văn Vượng.site | Văn Vượng</title>
+    /* container chính */
+    .container {
+      max-width: 1300px;
+      width: 100%;
+    }
 
-  <link rel="stylesheet" href="style.css">
+    /* ===== NEON HEADER ===== */
+    .neon-header {
+      text-align: center;
+      padding: 2rem 0 1.5rem;
+      border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .neon-header h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 8px #0ff, 0 0 20px #0ff, 0 0 40px #00bfff, 0 0 80px #0af;
+      animation: flicker 2s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { text-shadow: 0 0 5px #0ff, 0 0 15px #0ff, 0 0 30px #0af; }
+      100% { text-shadow: 0 0 10px #0ff, 0 0 30px #0ff, 0 0 60px #0af, 0 0 100px #00f; }
+    }
+
+    .neon-header p {
+      color: #b0b0ff;
+      font-size: 1.1rem;
+      margin-top: 0.3rem;
+      letter-spacing: 2px;
+    }
+
+    /* ===== THANH TÌM KIẾM ===== */
+    .search-wrapper {
+      display: flex;
+      justify-content: center;
+      margin: 1.8rem 0 2.2rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #14142a;
+      border: 2px solid #0ff;
+      border-radius: 60px;
+      padding: 0.3rem 0.3rem 0.3rem 1.8rem;
+      width: 100%;
+      max-width: 550px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 8px rgba(0, 255, 255, 0.2);
+      transition: all 0.25s ease;
+    }
+
+    .search-box:hover,
+    .search-box:focus-within {
+      box-shadow: 0 0 35px #0ff, 0 0 70px #0af, inset 0 0 12px #0ff;
+      border-color: #8af;
+    }
+
+    .search-box i {
+      color: #0ff;
+      font-size: 1.3rem;
+      margin-right: 0.8rem;
+      text-shadow: 0 0 8px #0ff;
+    }
+
+    .search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 0.9rem 0.2rem;
+      font-size: 1rem;
+      color: #f0f0ff;
+      outline: none;
+      letter-spacing: 0.5px;
+    }
+
+    .search-box input::placeholder {
+      color: #8888bb;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .search-box button {
+      background: #0ff;
+      border: none;
+      border-radius: 60px;
+      padding: 0.7rem 1.8rem;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #0b0b1a;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 0 20px #0ff;
+      letter-spacing: 1px;
+    }
+
+    .search-box button:hover {
+      background: #8af;
+      box-shadow: 0 0 40px #0ff, 0 0 80px #0af;
+      transform: scale(1.02);
+    }
+
+    /* ===== THẺ / TAG ===== */
+    .tag-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .tag {
+      background: #10102a;
+      padding: 0.5rem 1.6rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #b0b0ff;
+      border: 1.5px solid #0ff;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+      transition: all 0.2s ease;
+      cursor: default;
+      letter-spacing: 0.5px;
+    }
+
+    .tag:hover {
+      background: #0ff;
+      color: #0b0b1a;
+      box-shadow: 0 0 30px #0ff, 0 0 60px #0af;
+      transform: translateY(-3px) scale(1.02);
+      border-color: #8af;
+    }
+
+    .tag i {
+      margin-right: 6px;
+    }
+
+    /* ===== DANH SÁCH GAME ===== */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem 1.8rem;
+      margin: 2rem 0 3rem;
+    }
+
+    /* thẻ game */
+    .game-card {
+      background: #111127;
+      border-radius: 28px;
+      padding: 1.2rem 1rem 1.6rem;
+      border: 1.5px solid #2a2a5a;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+      transition: all 0.25s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(2px);
+      position: relative;
+    }
+
+    .game-card:hover {
+      border-color: #0ff;
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), 0 0 60px rgba(0, 150, 255, 0.2);
+      background: #15153a;
+    }
+
+    /* Ảnh thu nhỏ */
+    .thumbnail {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(145deg, #1a1a3a, #0d0d20);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border: 1px solid #2f2f6a;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+      position: relative;
+    }
+
+    .thumbnail i {
+      font-size: 4rem;
+      color: #0ff;
+      text-shadow: 0 0 30px #0ff, 0 0 60px #0af;
+      opacity: 0.7;
+    }
+
+    .game-card:hover .thumbnail {
+      border-color: #0ff;
+      box-shadow: 0 0 25px #0ff3;
+    }
+
+    .game-card h3 {
+      font-size: 1.3rem;
+      margin: 0.2rem 0 0.4rem;
+      color: #f0f0ff;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .game-card p {
+      font-size: 0.9rem;
+      color: #a0a0dd;
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* tag nhỏ trong card */
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.7rem;
+      margin: 0.4rem 0 1rem;
+    }
+
+    .card-tags span {
+      background: #1e1e48;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #b5b5ff;
+      border: 1px solid #3a3a7a;
+      box-shadow: 0 0 6px #0ff2;
+      transition: 0.15s;
+    }
+
+    .card-tags span:hover {
+      background: #0ff;
+      color: #0b0b1a;
+      border-color: #0ff;
+      box-shadow: 0 0 20px #0ff;
+    }
+
+    /* Nút tải xuống */
+    .download-btn {
+      background: transparent;
+      border: 1.8px solid #0ff;
+      color: #0ff;
+      padding: 0.6rem 0;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 0.3rem;
+      letter-spacing: 1.5px;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+      background: rgba(0, 255, 255, 0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .download-btn i {
+      font-size: 1rem;
+    }
+
+    .download-btn:hover {
+      background: #0ff;
+      color: #0b0b1a;
+      box-shadow: 0 0 35px #0ff, 0 0 70px #0af;
+      transform: scale(1.02);
+      border-color: #8af;
+    }
+
+    /* ===== TRANG CHI TIẾT (chi tiết game) ===== */
+    .detail-section {
+      margin: 3rem 0 2.5rem;
+      padding: 2.2rem 1.8rem;
+      background: #0f0f28;
+      border-radius: 40px;
+      border: 1.5px solid #0ff;
+      box-shadow: 0 0 40px #0ff2, inset 0 0 30px #0ff1;
+      transition: 0.3s;
+    }
+
+    .detail-section h2 {
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 0 0 20px #0ff, 0 0 40px #0af;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .detail-section h2 i {
+      color: #0ff;
+      text-shadow: 0 0 20px #0ff;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      font-size: 1rem;
+      color: #b0b0f0;
+      border-top: 1px solid #2a2a6a;
+      padding-top: 1.2rem;
+      margin-top: 0.8rem;
+    }
+
+    .detail-meta span {
+      background: #1a1a40;
+      padding: 0.2rem 1.2rem;
+      border-radius: 40px;
+      border: 1px solid #4a4a8a;
+    }
+
+    .detail-desc {
+      margin: 1.4rem 0 0.8rem;
+      line-height: 1.7;
+      color: #c0c0f0;
+    }
+
+    .detail-download {
+      background: #0ff;
+      border: none;
+      padding: 0.8rem 2.8rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #0b0b1a;
+      box-shadow: 0 0 30px #0ff;
+      transition: 0.2s;
+      cursor: pointer;
+      margin: 1.2rem 0 0.2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .detail-download:hover {
+      background: #8af;
+      box-shadow: 0 0 60px #0ff, 0 0 120px #0af;
+      transform: scale(1.02);
+    }
+
+    /* ===== ĐÁP ỨNG ===== */
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .neon-header h1 { font-size: 2.2rem; }
+      .search-box { max-width: 100%; padding-left: 1.2rem; }
+      .search-box button { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+      .game-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+      .detail-section { padding: 1.5rem; }
+      .detail-section h2 { font-size: 1.6rem; flex-wrap: wrap; }
+    }
+
+    @media (max-width: 480px) {
+      .neon-header h1 { font-size: 1.8rem; letter-spacing: 2px; }
+      .tag { padding: 0.3rem 1rem; font-size: 0.75rem; }
+      .game-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .game-card { padding: 0.9rem; }
+      .thumbnail i { font-size: 2.8rem; }
+      .detail-download { width: 100%; justify-content: center; }
+    }
+
+    /* hiệu ứng hover toàn cục */
+    .glow-hover {
+      transition: all 0.2s;
+    }
+    .glow-hover:hover {
+      filter: drop-shadow(0 0 12px #0ff);
+    }
+  </style>
 </head>
-
 <body>
+<div class="container">
 
-  <div class="bg-grid"></div>
-  <div class="glow glow-1"></div>
-  <div class="glow glow-2"></div>
-
-  <!-- HEADER -->
-  <header class="header">
-
-    <a href="#home" class="logo">
-      <span class="logo-v4x">V4X</span>
-      <span class="logo-download">DOWNLOAD</span>
-    </a>
-
-    <button id="menuBtn" class="menu-btn">☰</button>
-
-    <nav id="nav">
-      <a href="#home">Trang chủ</a>
-      <a href="#categories">Danh mục</a>
-      <a href="#files">Tệp tải</a>
-      <a href="#about">Giới thiệu</a>
-    </nav>
-
+  <!-- TRANG CHỦ NEON -->
+  <header class="neon-header">
+    <h1><i class="fas fa-gamepad" style="margin-right: 12px; color: #0ff;"></i>Neon GameHub</h1>
+    <p>⚡ khám phá · tải xuống · chơi ngay ⚡</p>
   </header>
 
-  <!-- HERO -->
-  <main id="home">
-
-    <section class="hero">
-
-      <div class="hero-content">
-
-        <div class="badge">
-          <span class="dot"></span>
-          V4X DOWNLOAD CENTER
-        </div>
-
-        <h1>
-          Kho tải
-          <span>V4X</span>
-          <br>
-          Game & Tool
-        </h1>
-
-        <p>
-         Ae Chịu Khó Vượt Link Tải giúp tôi . thêm tý Kinh phí lm  kênh nhó 
-        </p>
-
-        <div class="hero-buttons">
-
-          <a href="#files" class="btn btn-main">
-            🚀 Xem file
-          </a>
-
-          <a href="#categories" class="btn btn-outline">
-            Khám phá
-          </a>
-
-        </div>
-
-        <div class="stats">
-
-          <div class="stat">
-            <strong id="count">0</strong>
-            <span>FILE</span>
-          </div>
-
-          <div class="stat">
-            <strong>4</strong>
-            <span>DANH MỤC</span>
-          </div>
-
-          <div class="stat">
-            <strong>24/7</strong>
-            <span>ONLINE</span>
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="hero-art">
-
-        <div class="circle circle-outer"></div>
-        <div class="circle circle-middle"></div>
-
-        <div class="v4x-core">
-          <span>V4X</span>
-          <small>DOWNLOAD</small>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- CATEGORIES -->
-    <section id="categories" class="section">
-
-      <div class="section-title">
-        <span>BROWSE</span>
-        <h2>Danh mục</h2>
-        <p>Chọn loại tài nguyên bạn muốn tìm.</p>
-      </div>
-
-      <div class="categories">
-
-        <button class="category active" data-category="all">
-          <div class="category-icon">✦</div>
-          <b>Tất cả</b>
-          <small>Toàn bộ file</small>
-        </button>
-
-        <button class="category" data-category="game">
-          <div class="category-icon">🎮</div>
-          <b>Game</b>
-          <small>Tài nguyên gaming</small>
-        </button>
-
-        <button class="category" data-category="tool">
-          <div class="category-icon">🛠</div>
-          <b>Tool</b>
-          <small>Công cụ tiện ích</small>
-        </button>
-
-        <button class="category" data-category="windows">
-          <div class="category-icon">▣</div>
-          <b>Windows</b>
-          <small>Tối ưu PC</small>
-        </button>
-
-        <button class="category" data-category="emulator">
-          <div class="category-icon">📱</div>
-          <b>Emulator</b>
-          <small>Giả lập Android</small>
-        </button>
-
-      </div>
-
-    </section>
-
-    <!-- FILES -->
-    <section id="files" class="section">
-
-      <div class="heading-row">
-
-        <div class="section-title left">
-          <span>DOWNLOAD</span>
-          <h2>File mới nhất</h2>
-        </div>
-
-        <div class="search-box">
-          <span>⌕</span>
-          <input
-            id="search"
-            type="text"
-            placeholder="Tìm tên file..."
-            autocomplete="off"
-          >
-        </div class="search-box">
-          <span>⌕</span>
-          <input
-            id="search"
-            type="text"
-            placeholder="Tìm tên file..."
-            autocomplete="off"
-
-            </div class="search-box">
-          <span>⌕</span>
-          <input
-            id="search"
-            type="text"
-            placeholder="Tìm tên file..."
-            autocomplete="off"
-
-      <div id="fileGrid" class="files"></div>
-
-      <div id="empty" class="empty hidden">
-        <div>⌕</div>
-        <h3>Không tìm thấy file</h3>
-        <p>Thử tìm bằng từ khóa khác.</p>
-      </div>
-
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="section">
-
-      <div class="about-card">
-
-        <div class="about-logo">
-          V4X
-        </div>
-
-        <div>
-
-          <span>ABOUT V4X</span>
-
-          <h2>
-            V4X DOWNLOAD
-          </h2>
-
-          <p>
-            Website tải file được xây dựng bởi Văn Vượng.
-          </p>
-
-          <div class="tip">
-  
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-
-    <div class="footer-logo">
-      <b>V4X</b> DOWNLOAD
+  <!-- THANH TÌM KIẾM -->
+  <div class="search-wrapper">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Tìm kiếm game, thể loại..." aria-label="Tìm kiếm">
+      <button><i class="fas fa-arrow-right"></i> Tìm</button>
     </div>
-
-    <p>
-      © <span id="year"></span> V4X DOWNLOAD — Văn Vượng
-    </p>
-
-    <div class="footer-links">
-      <a href="#home">Trang chủ</a>
-      <a href="#files">Tải file</a>
-      <a href="#about">Giới thiệu</a>
-    </div>
-
-  </footer>
-
-  <!-- MODAL -->
-  <div id="modal" class="modal hidden">
-
-    <div class="modal-overlay"></div>
-
-    <div class="modal-card">
-
-      <button id="close" class="close">×</button>
-
-      <div id="mIcon" class="modal-icon">
-        📦
-      </div>
-
-      <span id="mCat" class="tag">
-        TOOL
-      </span>
-
-      <h3 id="mTitle">
-        Tên file
-      </h3>
-
-      <p id="mDesc">
-        Mô tả file
-      </p>
-
-      <div class="meta">
-
-        <span>
-          📦 <b id="mSize">--</b>
-        </span>
-
-        <span>
-          ⚡ <b id="mVer">--</b>
-        </span>
-
-      </div>
-
-      <a
-        id="mDownload"
-        class="btn btn-main full"
-        href="#"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        ⬇ TẢI XUỐNG
-      </a>
-
-    </div>
-
   </div>
 
-  <script src="script.js"></script>
+  <!-- THẺ (TAG) -->
+  <div class="tag-section">
+    <span class="tag"><i class="fas fa-tag"></i> Hành động</span>
+    <span class="tag"><i class="fas fa-tag"></i> Phiêu lưu</span>
+    <span class="tag"><i class="fas fa-tag"></i> Bắn súng</span>
+    <span class="tag"><i class="fas fa-tag"></i> Thể thao</span>
+    <span class="tag"><i class="fas fa-tag"></i> Chiến thuật</span>
+    <span class="tag"><i class="fas fa-tag"></i> Indie</span>
+    <span class="tag"><i class="fas fa-tag"></i> RPG</span>
+  </div>
 
+  <!-- DANH SÁCH TRÒ CHƠI (Game Grid) + Ảnh thu nhỏ, thẻ, tải xuống -->
+  <section class="game-grid">
+    <!-- Game 1 -->
+    <div class="game-card">
+      <div class="thumbnail"><i class="fas fa-robot"></i></div>
+      <h3>Cyber Strike</h3>
+      <p>Bắn súng góc nhìn thứ nhất, tương lai neon.</p>
+      <div class="card-tags">
+        <span>Hành động</span>
+        <span>Bắn súng</span>
+        <span>Cyber</span>
+      </div>
+      <button class="download-btn"><i class="fas fa-download"></i> TẢI XUỐNG</button>
+    </div>
+    <!-- Game 2 -->
+    <div class="game-card">
+      <div class="thumbnail"><i class="fas fa-dragon"></i></div>
+      <h3>Dragon's Oath</h3>
+      <p>Phiêu lưu kỳ ảo, thu thập rồng cổ đại.</p>
+      <div class="card-tags">
+        <span>Phiêu lưu</span>
+        <span>RPG</span>
+        <span>Kỳ ảo</span>
+      </div>
+      <button class="download-btn"><i class="fas fa-download"></i> TẢI XUỐNG</button>
+    </div>
+    <!-- Game 3 -->
+    <div class="game-card">
+      <div class="thumbnail"><i class="fas fa-futbol"></i></div>
+      <h3>Neon League</h3>
+      <p>Bóng đá đường phố với hiệu ứng neon.</p>
+      <div class="card-tags">
+        <span>Thể thao</span>
+        <span>Đối kháng</span>
+      </div>
+      <button class="download-btn"><i class="fas fa-download"></i> TẢI XUỐNG</button>
+    </div>
+    <!-- Game 4 -->
+    <div class="game-card">
+      <div class="thumbnail"><i class="fas fa-chess-queen"></i></div>
+      <h3>Shadow Tactics</h3>
+      <p>Chiến thuật theo lượt, bóng tối và ánh sáng.</p>
+      <div class="card-tags">
+        <span>Chiến thuật</span>
+        <span>Indie</span>
+      </div>
+      <button class="download-btn"><i class="fas fa-download"></i> TẢI XUỐNG</button>
+    </div>
+    <!-- Game 5 -->
+    <div class="game-card">
+      <div class="thumbnail"><i class="fas fa-car"></i></div>
+      <h3>Turbo Drift</h3>
+      <p>Đua xe tốc độ, drift trong thành phố neon.</p>
+      <div class="card-tags">
+        <span>Đua xe</span>
+        <span>Hành động</span>
+      </div>
+      <button class="download-btn"><i class="fas fa-download"></i> TẢI XUỐNG</button>
+    </div>
+    <!-- Game 6 -->
+    <div class="game-card">
+      <div class="thumbnail"><i class="fas fa-skull"></i></div>
+      <h3>Doom Eclipse</h3>
+      <p>Kinh dị sinh tồn, bóng tối và ánh trăng.</p>
+      <div class="card-tags">
+        <span>Kinh dị</span>
+        <span>Phiêu lưu</span>
+      </div>
+      <button class="download-btn"><i class="fas fa-download"></i> TẢI XUỐNG</button>
+    </div>
+  </section>
+
+  <!-- TRANG CHI TIẾT (chi tiết game mẫu) -->
+  <section class="detail-section" id="detail">
+    <h2><i class="fas fa-info-circle"></i> Cyber Strike · chi tiết</h2>
+    <div class="detail-meta">
+      <span><i class="fas fa-tag"></i> Hành động, Bắn súng</span>
+      <span><i class="fas fa-calendar-alt"></i> 2025</span>
+      <span><i class="fas fa-star" style="color: #ffd700;"></i> 4.8/5</span>
+    </div>
+    <div class="detail-desc">
+      <p><strong>Cyber Strike</strong> đưa bạn vào thế giới tương lai nơi các chiến binh cyborg chiến đấu trong thành phố ánh sáng. Sử dụng vũ khí công nghệ cao, chiến đấu với trí tuệ nhân tạo và khám phá bí mật đằng sau màn hình neon.</p>
+    </div>
+    <button class="detail-download"><i class="fas fa-download"></i> TẢI XUỐNG CYBER STRIKE</button>
+    <div style="margin-top: 1rem; font-size: 0.9rem; color: #8888bb;">
+      <i class="fas fa-database"></i> Dung lượng: 3.2 GB · Hỗ trợ: Windows / macOS
+    </div>
+  </section>
+
+  <!-- footer nhẹ -->
+  <div style="text-align: center; padding: 1.5rem 0 0.5rem; border-top: 1px solid #1f1f4a; margin-top: 1rem;">
+    <span style="color: #5a5a8a; letter-spacing: 1px;">⚡ Neon GameHub · 2026 ⚡</span>
+  </div>
+</div>
 </body>
 </html>
